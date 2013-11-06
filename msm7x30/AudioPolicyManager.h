@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2009 The Android Open Source Project
- * Copyright (c) 2012-2013, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2011-2013, The Linux Foundation. All rights reserved.
+ * Not a Contribution.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,14 +46,14 @@ public:
                                            audio_devices_t prevDevice,
                                            uint32_t delayMs);
 
-	void setStrategyMute(routing_strategy strategy,
-						 bool on,
-						 audio_io_handle_t output,
-						 int delayMs = 0,
-						 audio_devices_t device = (audio_devices_t)0);
-	void setStreamMute(int stream, bool on, audio_io_handle_t output,
-						int delayMs = 0,
-						audio_devices_t device = (audio_devices_t)0);
+        void setStrategyMute(routing_strategy strategy,
+                             bool on,
+                             audio_io_handle_t output,
+                             int delayMs = 0,
+                             audio_devices_t device = (audio_devices_t)0);
+        void setStreamMute(int stream, bool on, audio_io_handle_t output,
+                           int delayMs = 0,
+                           audio_devices_t device = (audio_devices_t)0);
 
         virtual AudioSystem::device_connection_state getDeviceConnectionState(audio_devices_t device,
                                                                               const char *device_address);
@@ -63,7 +64,7 @@ public:
                                             uint32_t format = AudioSystem::FORMAT_DEFAULT,
                                             uint32_t channels = 0,
                                             AudioSystem::output_flags flags =
-                                                    AudioSystem::OUTPUT_FLAG_INDIRECT);
+                                                    AudioSystem::OUTPUT_FLAG_INDIRECT, const audio_offload_info_t *offloadInfo = NULL);
         virtual status_t startOutput(audio_io_handle_t output,
                                      AudioSystem::stream_type stream,
                                      int session = 0);
@@ -134,7 +135,6 @@ protected:
 
         // returns true if give output is direct output
         bool isDirectOutput(audio_io_handle_t output);
-
         virtual AudioPolicyManagerBase::IOProfile* getProfileForDirectOutput(
                                                      audio_devices_t device,
                                                      uint32_t samplingRate,
